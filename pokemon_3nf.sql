@@ -41,7 +41,7 @@ INSERT INTO types_t(type_name) VALUES ('');
 -- Create the "wip_key" temp table of all the types for each pokemon
 CREATE TABLE wip_key AS SELECT type1, type2, tweaked_data.pokedex_number FROM tweaked_data, effectiveness WHERE tweaked_data.pokedex_number = effectiveness.pokedex_number;
 
-SELECT DISTINCT (type1, type2) FROM wip_key ORDER BY type_1;
+-- Wrong syntax, check slides SELECT DISTINCT (type1, type2) FROM wip_key ORDER BY type1;
 
 -- Create the "effectiveness_2" table
 -- Connects all the types for every pokemon + their effectiveness againt other types

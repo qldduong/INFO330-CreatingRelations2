@@ -79,7 +79,7 @@ INSERT INTO abilities_t(ability_name) SELECT DISTINCT ability FROM test_table;
 CREATE TABLE IF NOT EXISTS pok_abil_link('pok_abil_id' INTEGER PRIMARY KEY NOT NULL, 'pokedex_number' INT, 'abil_id' INT,
 FOREIGN KEY(pokedex_number) REFERENCES central_pokemon(pokedex_number), FOREIGN KEY(abil_id) REFERENCES abilities_t(abil_id)); 
 
--- Inserting into "pok_type_link"
+-- Inserting into "pok_abil_link"
 INSERT INTO pok_abil_link(pokedex_number, abil_id) SELECT w.pokedex_number, a.abil_id FROM
 central_pokemon as w, abilities_t as a, test_table as t WHERE t.pokedex_number = w.pokedex_number
 AND a.ability_name = t.ability; 

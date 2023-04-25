@@ -18,8 +18,7 @@ classification, defense, experience_growth, height_m,
 hp,percentage_male, sp_attack, sp_defense, speed, weight_kg, base_total, generation, is_legendary 
 
 FROM tweaked_data;
-______________________________________________________________________________________
-
+-------------------------------------------------------------------------------------------------------------
 -- Create the "effectiveness" table
 -- Stats like "against_fire", "against_dark", etc. are long and repeated- grouping them into a separate table for readability 
 -- Auto-generated integer 'efec_id' primary key // Foreign key: pokedex_number from central_pokemon
@@ -43,7 +42,7 @@ against_ice, against_normal, against_poison, against_psychic, against_rock, agai
 
 FROM tweaked_data as t, central_pokemon as w WHERE w.pokedex_number = t.pokedex_number;
 
-________________________________________________________________________________________
+-------------------------------------------------------------------------------------------------------------
 
 -- Create the "types_t" table
 -- Type1 and Type2, "" for pokemon without a second type
@@ -60,11 +59,12 @@ INSERT INTO types_t(type_name) SELECT DISTINCT type1 FROM tweaked_data;
 CREATE TABLE IF NOT EXISTS pok_type_link('pok_type_id' INTEGER PRIMARY KEY NOT NULL, 'pokedex_number' INT, 'type_id' INT,
 FOREIGN KEY(pokedex_number) REFERENCES central_pokemon(pokedex_number), FOREIGN KEY (type_id) REFERENCES types_t(type_id));
 
+-- Inserting into "pok_type_link"
 INSERT INTO pok_type_link(pokedex_number, type_id) SELECT w.pokedex_number, t.type_id FROM
 central_pokemon as w, types_t as t, tweaked_data as x WHERE x.pokedex_number = w.pokedex_number
 AND (t.type_name = x.type1 OR t.type_name = x.type2); 
 
-________________________________________________________________________________________
+-------------------------------------------------------------------------------------------------------------
 -- Many-to-Many bad! We'll want to use a linking table instead.
 
 -- Creating an "abilities_t" table, assigning each unique ability its own integer ability_id
@@ -79,8 +79,13 @@ INSERT INTO abilities_t(ability_name) SELECT DISTINCT ability FROM test_table;
 CREATE TABLE IF NOT EXISTS pok_abil_link('pok_abil_id' INTEGER PRIMARY KEY NOT NULL, 'pokedex_number' INT, 'abil_id' INT,
 FOREIGN KEY(pokedex_number) REFERENCES central_pokemon(pokedex_number), FOREIGN KEY(abil_id) REFERENCES abilities_t(abil_id)); 
 
+-- Inserting into "pok_type_link"
+INSERT INTO pok_abil_link(pokedex_number, abil_id) SELECT w.pokedex_number, a.abil_id FROM
+central_pokemon as w, abilities_t as a, test_table as t WHERE t.pokedex_number = w.pokedex_number
+AND a.ability_name = t.ability; 
 
-________________________________________________________________________________________
+
+-------------------------------------------------------------------------------------------------------------
 
 -- TABLES TO DROP: Imported_pokemon_data, tweaked_data
 

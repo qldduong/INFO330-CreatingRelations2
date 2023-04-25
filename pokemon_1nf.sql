@@ -1,12 +1,11 @@
 -- File path: C:\Users\renti\Documents\INFO330\INFO330-CreatingRelations2
 
 -- Steps to make the database 1NF
-	-- Primary issue: The "abilities" column stores multiple values per cell
+-- Primary issue: The "abilities" column stores multiple values per cell
 
 
 
---------------------------------------------------
-
+-------------------------------------------------------------------------
 -- ORIGINAL IMPORTED_POKEMON_DATA SCHEMA HERE:
 
 /*
@@ -25,8 +24,7 @@ CREATE TABLE IF NOT EXISTS imported_pokemon_data(
 
 
 	
-_________________________________________________________________
-
+-------------------------------------------------------------------------
 -- Import pokemon data
 .mode csv
 .import pokemon.csv imported_pokemon_data
@@ -78,7 +76,7 @@ SELECT pokedex_number, abilities, against_bug, against_dark, against_dragon,
 
 FROM imported_pokemon_data WHERE pokedex_number IS NOT NULL; 
 
-___________________________________________________________________________________________________________________
+-------------------------------------------------------------------------------------------------------------
 -- Don't split across columns- split across rows instead
 -- Splitting abilities lists into multiple separate rows (atomization) 
 -- Source: https://www.vivekkalyan.com/splitting-comma-seperated-fields-sqlite 
@@ -123,7 +121,6 @@ CREATE TABLE table_1nf AS
 
 DROP TABLE imported_pokemon_data; -- Don't need, replaced with tweaked_data
 
-_______________________________________________________________
-
+-------------------------------------------------------------------------------------------------------------
 -- TABLES TO DROP: test_table
 -- Extra tables will be dropped at the end of the 3NF file, as temp tables stay useful for steps after 1NF
